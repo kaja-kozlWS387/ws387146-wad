@@ -1,0 +1,17 @@
+# URL rewriting
+
+RewriteEngine On
+
+# Redirect ugly `app/view/...` requests to clean paths (external redirect)
+# e.g. /mvc/app/view/display  -> /mvc/display
+RewriteRule ^app/(?:view|views)/?(.*)$ /mvc/$1 [R=301,L]
+
+# Send all requests that are not files or directories to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?uri=$1 [QSA,L]
+
+# Optional: allow direct access to assets folder and robots.txt
+RewriteCond %{REQUEST_URI} ^/mvc/assets/ [OR]
+RewriteCond %{REQUEST_URI} ^/mvc/robots.txt$
+RewriteRule .* - [L]

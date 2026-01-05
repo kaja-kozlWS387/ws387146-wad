@@ -1,0 +1,10 @@
+{
+    "name": "darynazborovska/mvc",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./app/",
+            "Darynazborovska\\Mvc\\": "src/"
+        }
+    },
+    "require": {}
+}
