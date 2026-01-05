@@ -3,6 +3,8 @@
 
 # Enables declaring a defined class from its namespace before using it in the project (no need for require_once for each class file)
 require_once __DIR__ . '/../vendor/autoload.php';
+
+use app\controller\AuthController;
 use app\core\Application;
 use app\controller\SiteController;
 
@@ -13,11 +15,15 @@ $app = new Application(dirname(__DIR__));
 $app->router->get('/', function() {
     return 'Hello world';
 });
+
 $app->router->get('/courses', [SiteController::class, 'courses']);
+
 $app->router->get('/profile', [SiteController::class, 'self']);
+
 $app->router->get('/users', [SiteController::class, 'users']);
-$app->router->get('/login', [SiteController::class, 'login']);
-$app->router->post('/login', [SiteController::class, 'handleLogin']);
+
+$app->router->get('/login', [AuthController::class, 'login']);
+$app->router->post('/login', [AuthController::class, 'login']);
 
 # Actually creates the application and runs it
 $app->run();

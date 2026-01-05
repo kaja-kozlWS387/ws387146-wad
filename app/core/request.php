@@ -14,22 +14,31 @@ class Request {
         }
     }
 
-    public function getMethod() {
+    public function method() {
         return $_SERVER['REQUEST_METHOD'] ?? 'GET'; # Determines the request method
     }
 
+    public function isGet() {
+        return $this->method() === 'GET';
+    }
+
+    public function isPost() {
+        return $this->method() === 'POST';
+    }
+
+    
     # As POST data may contain malicious data submitted from the user, it must be sanitised and invalid symbols removed
     public function getBody() {
         $body =[];
 
         # Handles GET requests (all parameters after in the URL) 
-        if ($this->getMethod() === 'GET') {
+        if ($this->method() === 'GET') {
             foreach ($_GET as $key => $value) {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
 
-        if ($this->getMethod() === 'POST') {
+        if ($this->method() === 'POST') {
             foreach ($_POST as $key => $value) {
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }

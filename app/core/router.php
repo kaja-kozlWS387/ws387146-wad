@@ -6,6 +6,7 @@ class Router
 {
     public Request $request;
     public Response $response;
+
     // Maps a request method and path to a callback function
     protected array $routes = [
         'GET' => [],
@@ -32,7 +33,7 @@ class Router
 
         # Parses the request to get the path and method
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();
+        $method = $this->request->method();
 
         $callback = $this->routes[$method][$path] ?? false;
         
@@ -51,7 +52,8 @@ class Router
         # so... Create an instance of the relevant controller class and call the method
 
         if (is_array($callback)) {
-            $callback[0] = new $callback[0]();
+            Application::$app->controller = new $callback[0]();
+            $callback[0] = Application::$app->controller;
         }
 
         return call_user_func($callback, $this->request);
@@ -66,8 +68,9 @@ class Router
 
     // Renders the main layout content which icludes repeated elements like header and footer
     protected function layoutContent() {
+        $layout = Application::$app->controller->layout;
         ob_start(); # Captures output in an internal buffer
-        include_once Application::$ROOT_DIR . "\app\\view\\layouts\\main.php"; # File layout goes into active buffer
+        include_once Application::$ROOT_DIR . "\app\\view\\layouts\\$layout.php"; # File layout goes into active buffer
         return ob_get_clean(); # Returns the buffer content as a string and clears it
     }
     

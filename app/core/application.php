@@ -1,6 +1,7 @@
 <?php
 
 namespace app\core;
+use app\core\Controller;
 class Application
 {
     // All properities that need to be globally accessible from the application
@@ -9,6 +10,7 @@ class Application
     public Request $request;
     public Response $response;
     public static Application $app;
+    public Controller $controller;
 
     public function __construct($rootPath) {
         self::$app = $this;
@@ -22,6 +24,16 @@ class Application
     public function run()
     {
         echo $this->router->resolve();
+    }
+
+    public function getController(): Controller
+    {
+        return $this->controller;
+    }
+
+    public function setController($controller): void
+    {
+        $this->controller = $controller;
     }
 }
 

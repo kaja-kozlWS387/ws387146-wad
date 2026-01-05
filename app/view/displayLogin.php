@@ -15,6 +15,8 @@
     <input type="text" id="email" name="email"><br><br>
     <label for="password">Password:</label>
     <input type="text" id="password" name="password"><br><br>
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="text" id="confirmPassword" name="confirmPassword"><br><br>
     <label for="firstName">First Name:</label>
     <input type="text" id="firstName" name="firstName"><br><br>
     <label for="lastName">Last Name:</label>
