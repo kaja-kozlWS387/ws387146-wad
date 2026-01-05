@@ -6,7 +6,7 @@ use app\core\Controller;
 
 class SiteController extends Controller {
 
-    public static function courses() {
+    public function courses() {
         $params = [
             'courses' => [
                 ['id' => 1, 'name' => 'Mathematics 101', 'description' => 'An introduction to Mathematics.'],
@@ -15,22 +15,22 @@ class SiteController extends Controller {
             ]
         ];
 
-        return Application::$app->router->renderView('displayCourses', $params);
+        return $this->render('displayCourses', $params);
     }
 
-    public static function profile() {
-        return Application::$app->router->renderView('displaySelf');
+    public function self() {
+        return $this->render('displaySelf');
     }
 
-    public static function users() {
-        return Application::$app->router->renderView('displayUsers');
+    public function users() {
+        return $this->render('displayUsers');
     }
 
-    public static function login() {
-        return Application::$app->router->renderView('displayLogin');
+    public function login() {
+        return $this->render('displayLogin');
     }
 
-    public static function handleLogin() {
+    public function handleLogin() {
         // Handle authentication in the authController
     }
 }

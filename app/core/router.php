@@ -42,8 +42,16 @@ class Router
             return $this->renderView('_404');
         }
 
+        # Takes a whole page that needs to be loaded and returns it so that it can be outputted
         if (is_string($callback)) {
             return $this->renderView($callback);
+        }
+
+        # If the callback is an array, it means it's a controller method...
+        # so... Create an instance of the relevant controller class and call the method
+
+        if (is_array($callback)) {
+            $callback[0] = new $callback[0]();
         }
 
         return call_user_func($callback);
@@ -51,23 +59,24 @@ class Router
         //$body = $this->request->getBody();
     }
 
+    // Displays the page and any extra parameters passed to it
     public function renderView($view, $params = []) {
-        $layoutContent = $this->layoutContent();
-        $viewContent = $this->renderOnlyView($view, $params);
+        $layoutContent = $this->layoutContent(); // Renders the common layout for all pages
+        $viewContent = $this->renderOnlyView($view, $params); 
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
-
+    // Renders the main layout content which icludes repeated elements like header and footer
     protected function layoutContent() {
-        ob_start();
-        include_once Application::$ROOT_DIR . "\app\\view\\layouts\\main.php";
-        return ob_get_clean();
+        ob_start(); # Captures output in an internal buffer
+        include_once Application::$ROOT_DIR . "\app\\view\\layouts\\main.php"; # File layout goes into active buffer
+        return ob_get_clean(); # Returns the buffer content as a string and clears it
     }
     
     protected function renderOnlyView($view, $params) {
         foreach ($params as $key => $value) {
             $$key = $value;
-        }
+        } # Stores the parameters as variables to be used in the fields of the view file
         ob_start();
         include_once Application::$ROOT_DIR . "\app\\view\\$view.php";
         return ob_get_clean();
