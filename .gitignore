@@ -1,5 +1,5 @@
 # Ignores sensitive and unnecessary files in the repository
 .env 
-vendor. 
+vendor/
 /public/uploads/ 
 .idea/
