@@ -3,6 +3,7 @@
 namespace app\controller;
 use app\core\Application;
 use app\core\Controller;
+use app\core\Request;
 
 class SiteController extends Controller {
 
@@ -30,8 +31,10 @@ class SiteController extends Controller {
         return $this->render('displayLogin');
     }
 
-    public function handleLogin() {
+    public function handleLogin(Request $request) {
         // Handle authentication in the authController
+        $body = $request->getBody();
+        var_dump($body);
     }
 }
 

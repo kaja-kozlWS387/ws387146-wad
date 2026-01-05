@@ -18,8 +18,24 @@ class Request {
         return $_SERVER['REQUEST_METHOD'] ?? 'GET'; # Determines the request method
     }
 
+    # As POST data may contain malicious data submitted from the user, it must be sanitised and invalid symbols removed
     public function getBody() {
+        $body =[];
 
+        # Handles GET requests (all parameters after in the URL) 
+        if ($this->getMethod() === 'GET') {
+            foreach ($_GET as $key => $value) {
+                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+
+        if ($this->getMethod() === 'POST') {
+            foreach ($_POST as $key => $value) {
+                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+
+        return $body;
     }
 }
 

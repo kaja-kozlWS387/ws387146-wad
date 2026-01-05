@@ -54,9 +54,7 @@ class Router
             $callback[0] = new $callback[0]();
         }
 
-        return call_user_func($callback);
-
-        //$body = $this->request->getBody();
+        return call_user_func($callback, $this->request);
     }
 
     // Displays the page and any extra parameters passed to it
