@@ -1,24 +1,41 @@
 <?php
+namespace app\model;
+use app\core\Model;
 
-abstract class UserBase {
+class UserModel extends Model {
   public $uid;
   public $email;
   public $firstName;
   public $lastName;
   public $jobTitle;
   public $accessLevel;
+  public $password;
+  public $confirmPassword;
 
-  function __construct($uid, $email, $firstName, $lastName, $jobTitle, $accessLevel) {
-    $this->uid = $uid;
-    $this->email = $email;
-    $this->firstName = $firstName;
-    $this->lastName = $lastName;
-    $this->jobTitle = $jobTitle;
-    $this->accessLevel = $accessLevel;
-  }
+//   function __construct($uid, $email, $firstName, $lastName, $jobTitle, $accessLevel) {
+//     $this->uid = $uid;
+//     $this->email = $email;
+//     $this->firstName = $firstName;
+//     $this->lastName = $lastName;
+//     $this->jobTitle = $jobTitle;
+//     $this->accessLevel = $accessLevel;
+//   }
 
-    public function createUser($userData) {
+    public function rules(): array 
+    {
+        return [
+            'firstName' => [self::RULE_REQUIRED],
+            'lastName' => [self::RULE_REQUIRED],
+            'email' => [self::RULE_REQUIRED, self::RULE_EMAIL],
+            'password' => [self::RULE_REQUIRED, [self::RULE_MIN, 'min' => 8]],
+            'confirmPassword' => [self::RULE_REQUIRED, [self::RULE_MATCH, 'match' => 'password']],
+            'jobTitle' => [self::RULE_REQUIRED]
+        ];
+    }
+
+    public function createUser() {
         // TODO: Insert new user into database
+        return "Creating user";
     }
 
     public function verifyUser($email, $password) { 

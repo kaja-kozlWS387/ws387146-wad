@@ -4,7 +4,7 @@ namespace app\controller;
 require_once '../model/userModel.php';
 require_once __DIR__ . '/permissionsController.php';
 
-class UserController {
+class UserController extends Controller {
     private $userModel;
 
     public function __construct() {

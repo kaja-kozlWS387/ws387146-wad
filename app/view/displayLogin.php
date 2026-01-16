@@ -18,7 +18,7 @@
     <label for="confirmPassword">Confirm Password:</label>
     <input type="text" id="confirmPassword" name="confirmPassword"><br><br>
     <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName"><br><br>
+    <input type="text" id="firstName" name="firstName"/><br><br>
     <label for="lastName">Last Name:</label>
     <input type="text" id="lastName" name="lastName"><br><br>
     <select name="jobTitle" id="jobTitle">
